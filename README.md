@@ -1,268 +1,211 @@
-Baim Market Uploader
+Baimluaa
 
-Uploader file berbasis Python untuk mengunggah file ke SFile.co menggunakan sistem chunk upload, pengecekan hash, dan resume upload.
+«Python-based file uploader for Baim Market.»
+
+Baimluaa adalah tool Python untuk mengunggah file melalui SFile.co dengan dukungan chunk upload, MD5 hash checking, duplicate detection, dan resume upload.
 
 ✨ Features
 
-- 🚀 Upload file ke SFile.co
-- 📦 Chunk upload untuk file besar
-- 🔄 Resume chunk yang sebelumnya sudah ter-upload
-- 🔍 MD5 hash verification
-- ♻️ Deteksi file duplikat
-- 🔗 Otomatis mengambil download URL
-- 📝 Support deskripsi file
-- 📱 Bisa digunakan di Android melalui Termux
-- 💻 Bisa digunakan di Windows, Linux, dan macOS
-- 🛡️ Maximum file size: 250 MB
+- 🚀 File upload
+- 📦 Chunk-based upload
+- 🔄 Resume upload
+- 🔍 MD5 hash checking
+- ♻️ Duplicate detection
+- 🔗 Automatic URL extraction
+- 📝 Custom file description
+- 📱 Support Termux / Android
+- 💻 Support Windows, Linux, dan macOS
+- 📏 Maximum file size: 250 MB
 
----
+📁 Project Structure
 
-📁 Struktur Project
+Baimluaa/
+├── main.py
+└── README.md
 
-Baim-Market/
-├── uploader.py
-├── README.md
-└── requirements.txt
+🛠️ Requirements
 
-«Jika file Python kamu memiliki nama berbeda, sesuaikan "uploader.py" dengan nama file tersebut.»
-
----
-
-🛠️ Installation
-
-Windows
-
-Pastikan Python 3.10+ sudah terinstall.
-
-Clone repository:
-
-git clone https://github.com/USERNAME/Baim-Market.git
-cd Baim-Market
+- Python 3.10+
+- "requests"
 
 Install dependency:
-
-pip install -r requirements.txt
-
-Atau langsung:
 
 pip install requests
 
----
+Linux:
 
-Linux
+pip3 install requests
 
-git clone https://github.com/USERNAME/Baim-Market.git
-cd Baim-Market
+🚀 Installation
+
+Windows
+
+Clone repository:
+
+git clone https://github.com/baimlekk7-design/Baimluaa.git
+cd Baimluaa
 
 Install dependency:
 
-pip3 install -r requirements.txt
+pip install requests
 
----
+Linux
+
+git clone https://github.com/baimlekk7-design/Baimluaa.git
+cd Baimluaa
+pip3 install requests
 
 Android — Termux
 
-Install Python:
+Install Python dan Git:
 
 pkg update
-pkg upgrade
 pkg install python git
 
 Clone repository:
 
-git clone https://github.com/USERNAME/Baim-Market.git
-cd Baim-Market
+git clone https://github.com/baimlekk7-design/Baimluaa.git
+cd Baimluaa
 
-Install dependency:
+Install Requests:
 
 pip install requests
 
----
+▶️ Usage
 
-📦 Requirements
+Format:
 
-Project ini membutuhkan:
-
-Python 3.10+
-requests
-
-Contoh "requirements.txt":
-
-requests>=2.31.0
-
-Install dengan:
-
-pip install -r requirements.txt
-
----
-
-🚀 Usage
-
-Format dasar:
-
-python uploader.py FILE
+python main.py <file>
 
 Contoh:
 
-python uploader.py file.zip
+python main.py file.zip
 
 Dengan deskripsi:
 
-python uploader.py file.zip "Baim Market Tools"
+python main.py file.zip "Baim Market Release"
 
----
-
-📱 Contoh di Termux
-
-Misalnya file berada di folder Download Android.
+📱 Termux
 
 Berikan akses storage:
 
 termux-setup-storage
 
-Kemudian:
+Contoh upload file dari folder Download:
 
-cd ~/storage/downloads
-
-Upload file:
-
-python ~/Baim-Market/uploader.py script.zip
+python main.py ~/storage/downloads/file.zip
 
 Dengan deskripsi:
 
-python ~/Baim-Market/uploader.py script.zip "Baim Market Release"
+python main.py ~/storage/downloads/file.zip "Baim Market"
 
----
+📦 Upload Process
 
-🔗 Output
+Baimluaa menggunakan chunk upload sehingga file besar tidak dikirim sebagai satu request.
 
-Jika upload berhasil, program akan menampilkan informasi seperti:
-
-[author : Baim Market] Target: script.zip (5242880 bytes)
-[author : Baim Market] MD5 hash: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-[author : Baim Market] Mulai upload 5 chunk...
-[author : Baim Market] Chunk 1/5 terkirim (HTTP 200)
-[author : Baim Market] Chunk 2/5 terkirim (HTTP 200)
-[author : Baim Market] Chunk 3/5 terkirim (HTTP 200)
-[author : Baim Market] Chunk 4/5 terkirim (HTTP 200)
-[author : Baim Market] Chunk 5/5 terkirim (HTTP 200)
-[author : Baim Market] Upload selesai: https://sfile.co/xxxxxx
-
-URL terakhir dapat digunakan untuk mengakses file yang sudah di-upload.
-
----
-
-🔄 Resume Upload
-
-Uploader menggunakan sistem chunk.
-
-File dibagi menjadi beberapa bagian dengan ukuran:
-
-1 MB / chunk
-
-Jika sebagian chunk sudah tersedia di server, uploader akan melewati chunk tersebut:
-
-Chunk 1/10 dilewati (sudah ada)
-Chunk 2/10 dilewati (sudah ada)
-Chunk 3/10 terkirim
-
-Hal ini membantu melanjutkan proses upload tanpa harus mengirim ulang seluruh file.
-
----
-
-♻️ Duplicate Detection
-
-Sebelum upload, program menghitung MD5 hash file.
-
-Contoh:
-
-MD5 hash: 4f7c2f8bxxxxxxxxxxxxxxxxxxxxxxxx
-
-Hash tersebut digunakan untuk mengecek apakah file yang sama sudah tersedia di server.
-
-Jika terdeteksi:
-
-File duplikat terdeteksi di server.
-
-Uploader akan mencoba mengambil URL file yang sudah ada.
-
----
-
-📏 File Size Limit
-
-Maximum file size:
-
-250 MB
-
-Jika file melebihi batas:
-
-Ukuran file ... bytes melampaui limit 250 MB.
-
-Upload akan dihentikan.
-
----
-
-⚙️ Configuration
-
-Beberapa konfigurasi utama terdapat di bagian atas "uploader.py":
-
-BASE_URL = "https://sfile.co"
-
-CHUNK_SIZE = 1024 * 1024
-
-MAX_FILE_SIZE = 250 * 1024 * 1024
-
-Chunk Size
-
-Default:
+Default chunk size:
 
 1 MB
 
-Secara Python:
+Alur upload:
 
-CHUNK_SIZE = 1024 * 1024
+File
+  ↓
+MD5 Hash
+  ↓
+Check Duplicate
+  ↓
+Split Into Chunks
+  ↓
+Upload Chunks
+  ↓
+Resume Existing Chunks
+  ↓
+Extract URL
+  ↓
+Done
 
-Maximum File Size
+🔄 Resume Upload
 
-Default:
+Jika chunk tertentu sudah tersedia di server, uploader dapat melewati chunk tersebut dan melanjutkan chunk berikutnya.
+
+Contoh:
+
+Chunk 1/5 → existing → skip
+Chunk 2/5 → existing → skip
+Chunk 3/5 → upload
+Chunk 4/5 → upload
+Chunk 5/5 → upload
+
+♻️ Duplicate Detection
+
+Sebelum proses upload, file dihitung menggunakan MD5.
+
+MD5 → Check server → Duplicate?
+                     ├─ Yes → Get existing URL
+                     └─ No  → Start upload
+
+Jika file yang sama sudah tersedia, tool mencoba mengambil URL yang tersedia daripada mengupload ulang file tersebut.
+
+📏 File Limit
+
+Maximum file size yang dikonfigurasi:
 
 250 MB
 
-Secara Python:
+File yang melebihi limit akan ditolak sebelum proses upload dimulai.
+
+⚙️ Configuration
+
+Konfigurasi utama tersedia di bagian atas "main.py".
+
+Base URL
+
+BASE_URL = "https://sfile.co"
+
+Chunk Size
+
+CHUNK_SIZE = 1024 * 1024
+
+Nilai tersebut berarti:
+
+1 MB
+
+Maximum File Size
 
 MAX_FILE_SIZE = 250 * 1024 * 1024
 
----
+Nilai tersebut berarti:
+
+250 MB
 
 🧪 Examples
 
-Upload ZIP
+ZIP
 
-python uploader.py BaimTools.zip
+python main.py BaimTools.zip
 
-Upload APK
+APK
 
-python uploader.py aplikasi.apk
+python main.py aplikasi.apk
 
-Upload dengan deskripsi
+File dengan description
 
-python uploader.py aplikasi.apk "Baim Market Android Release"
+python main.py aplikasi.apk "Baim Market Release"
 
-Upload file dari path
+Full path
 
 Windows:
 
-python uploader.py "C:\Users\User\Downloads\file.zip"
+python main.py "C:\Users\User\Downloads\file.zip"
 
 Linux:
 
-python uploader.py "/home/user/Downloads/file.zip"
+python main.py "/home/user/Downloads/file.zip"
 
 Termux:
 
-python uploader.py "/sdcard/Download/file.zip"
-
----
+python main.py "/sdcard/Download/file.zip"
 
 ❗ Troubleshooting
 
@@ -272,87 +215,63 @@ Install Requests:
 
 pip install requests
 
-Jika menggunakan Linux:
-
-pip3 install requests
-
----
-
 "File tidak ada"
 
 Pastikan path file benar.
 
-Contoh:
+Cek isi directory:
 
 ls
 
-Kemudian jalankan:
+Kemudian:
 
-python uploader.py nama-file.zip
+python main.py nama-file.zip
 
----
+HTTP 5xx
 
-Upload gagal dengan HTTP 5xx
+Server sedang memberikan server error. Tool memiliki retry untuk error server tertentu.
 
-Server sedang mengembalikan server error.
-
-Uploader otomatis mencoba melakukan 1x retry untuk error HTTP 5xx.
-
-Jika tetap gagal, coba upload kembali beberapa saat kemudian.
-
----
+Jika masih gagal, jalankan kembali proses upload setelah beberapa saat.
 
 URL tidak terbaca
 
-Jika semua chunk berhasil tetapi response server tidak memberikan URL yang dikenali, program akan menampilkan:
+Jika seluruh chunk berhasil tetapi URL tidak ditemukan pada response server, tool akan menampilkan pesan bahwa URL tidak terbaca.
 
-Upload selesai, URL tidak terbaca di response.
+🔐 Security
 
-Dalam kondisi ini file mungkin sudah diproses oleh server, tetapi endpoint tidak memberikan format response yang dikenali oleh uploader.
-
----
-
-🔐 Privacy
-
-Program ini tidak meminta username atau password SFile.
-
-File dikirim langsung ke endpoint upload SFile menggunakan HTTP request.
-
-Jangan upload file yang berisi:
+Jangan upload file yang berisi informasi sensitif seperti:
 
 - Password
 - API key
-- Token
+- Access token
 - Private key
 - Data pribadi
-- Informasi rahasia
+- Credential
 
----
+Tool tidak membutuhkan username atau password SFile untuk proses upload.
 
 ⚠️ Disclaimer
 
-Baim Market Uploader adalah project pihak ketiga untuk mempermudah proses upload file.
+Baimluaa merupakan project pihak ketiga dan tidak berafiliasi secara resmi dengan SFile.co.
 
-Project ini tidak berafiliasi secara resmi dengan SFile.co.
-
-Pastikan file yang kamu upload tidak melanggar hukum, hak cipta, atau aturan layanan platform tujuan.
-
----
-
-📜 License
-
-Gunakan dan modifikasi project ini sesuai kebutuhan kamu.
-
-Jika melakukan redistribusi atau modifikasi, disarankan tetap mencantumkan credit asli project.
-
----
+Gunakan tool ini hanya untuk file yang memang berhak kamu upload dan sesuai dengan aturan layanan platform yang digunakan.
 
 👤 Author
 
 Baim Market
 
-Project:
+GitHub:
 
-Baim Market Uploader
+"baimlekk7-design"
 
-Made with Python 🐍
+Repository:
+
+"Baimluaa"
+
+---
+
+⭐ Support
+
+Jika project ini membantu, kamu bisa memberikan Star pada repository GitHub.
+
+Made with 🐍 Python
